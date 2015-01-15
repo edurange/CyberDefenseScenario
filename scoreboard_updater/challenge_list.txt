@@ -1,0 +1,12 @@
+sql_version: 1
+vandalism: 1
+ssn_recon: 0
+persistent_access: 0
+wrench_in_the_gears: 0
+logout_user: 0
+ftp_server: 0
+stan: 0
+plugin: 1
+forgot_my_pass: 0
+compress_stan: 0
+pro_tools: 1
