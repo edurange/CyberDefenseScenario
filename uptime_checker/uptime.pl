@@ -141,7 +141,7 @@ foreach my $val (@servers) {
 		my $paddr = sockaddr_in($val->{portnumber}, inet_aton($val->{hostname}));
 		connect($sock, $paddr) or $isup = 0;
 	} else {
-		error("[!] Unknown protocol: $val->{protocol}.\n");
+		error("unknown protocol: $val->{protocol}.\n");
 	}
 	if ($isup == 0) {
 		errormsg("error in socket creation : $!\n\n");
@@ -172,7 +172,7 @@ foreach my $val (@servers) {
 			recv($sock, $recieved_data, 10000, 0);
 		}
 		if (length($received_data) <= 0) {
-			print("[!] received nothing!\n");
+			errormsg("received nothing!\n");
 			$uptime_min = ((int($uptime_min) > 9 || length($uptime_min) >= 2) ? "" : "0") . $uptime_min . "min";
 			$uptime_sec = ((int($uptime_sec) > 9 || length($uptime_sec) >= 2) ? "" : "0") . $uptime_sec . "sec";
 			$downtime_min = $downtime_min + int(($downtime_sec + $apprxsec_sincelastcheck) / 60) unless (($downtime_sec + $apprxsec_sincelastcheck) < 60);
