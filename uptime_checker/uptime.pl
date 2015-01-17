@@ -1,6 +1,16 @@
 #!/usr/bin/perl
 
-# uptime.pl by David Weinman
+# uptime.pl by David Weinman <david@weinman.com>
+#
+# reads in seconds since our lest check as the only
+# argument (apprxsec_sincelastcheck), reads in the
+# uptime.config file, makes a Server object out
+# of every entry and adds them to an array of Server
+# objects, iterates through the array, saves the
+# uptime and downtime from their respective files
+# and then checks if the server is up or down and
+# writes the new uptime and downtime to the uptime
+# file associated with that server.
 
 require 5.008;
 use strict;
@@ -8,6 +18,7 @@ use warnings;
 use Socket;
 use Server;
 
+use constant TIMEOUT => 8;
 use constant MAX_UPTIME_FILE_LEN => 40;
 use constant DELIM => ',';
 
@@ -25,7 +36,7 @@ sub ltrim($)
 # Right trim function to remove ending whitespace
 sub rtrim($)
 {
-	my $string = shift or error("ltrim got no string to trim");
+	my $string = shift or error("rtrim got no string to trim");
 	$string =~ s/\s+//gm;
 	return $string;
 }
@@ -48,7 +59,6 @@ if (@ARGV != 1 || $ARGV[0] !~ /[0-9]+/) {
 }
 
 my $apprxsec_sincelastcheck = int($ARGV[0]);
-print("[DB] the seconds since last check are: " . $apprxsec_sincelastcheck . "\n");
 
 # flush after every write
 $| = 1;
@@ -146,7 +156,21 @@ foreach my $val (@servers) {
 		print("[*] Connection success.\n") unless $proto_num eq 17;
 		send($sock, "$val->{hello_msg}\r\n\r\n", 0);
 		print("[*] sent $val->{hello_msg}\n");
-		recv($sock, $received_data, 10000, 0);
+		$recieved_data = "";
+		# if we are dealing with udp, we need a timout in case the server is dead ( or doesn't respond )
+		eval {
+			# make a subroutine for letting the user know that the alarm timed out
+			# and register this subroutine as the handler for the alarm signal
+			local $SIG{ALRM} = sub { errormsg("udp server alarm time out"); };
+			alarm TIMEOUT; # send an alarm signal after TIMEOUT seconds
+			recv($sock, $received_data, 10000, 0);
+			alarm 0;
+			1;
+		} if ($proto_num eq 17);
+		# if we are dealing with tcp, we have a connection to rely on, so no timeouts!
+		if ($proto_num eq 6) {
+			recv($sock, $recieved_data, 10000, 0);
+		}
 		if (length($received_data) <= 0) {
 			print("[!] received nothing!\n");
 			$uptime_min = ((int($uptime_min) > 9 || length($uptime_min) >= 2) ? "" : "0") . $uptime_min . "min";
