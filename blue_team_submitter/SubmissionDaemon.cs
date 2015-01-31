@@ -22,7 +22,7 @@ namespace SubmissionDaemon
     public class SubmissionDaemon : ServiceBase
     {
         // scoring server information
-        const Int32 port = 1212;
+        const Int32 port = 7890;
         const String scoringServer = "10.0.27.128";
 
         // maximum submission size in bytes (10K).
@@ -42,7 +42,7 @@ namespace SubmissionDaemon
         const String chall5_foldername = "pro_tools\\";
         const String chall6_foldername = "plugin\\";
 
-        const String submissions_path = "C:\\Users\\blue_team\\Documents\\submissions\\";
+        const String submissions_path = "C:\\Users\\Administrator\\Documents\\submissions\\";
 
         // challenge file watcher objects
         FileSystemWatcher chall1_filewatcher;

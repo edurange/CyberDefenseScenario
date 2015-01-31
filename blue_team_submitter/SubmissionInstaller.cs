@@ -25,7 +25,10 @@ namespace SubmissionDaemon
             submissionDaemonInstaller = new ServiceInstaller();
             // Here you can set properties on submissionProcessInstaller
             //or register event handlers
-            submissionProcessInstaller.Account = ServiceAccount.LocalService;
+//            submissionProcessInstaller.Account = ServiceAccount.LocalService;
+            submissionProcessInstaller.Account = ServiceAccount.User;
+            submissionProcessInstaller.Username = "WIN-HRFWZM5A719\\Administrator";
+            submissionProcessInstaller.Password = "blue_team_abcd";
 
             submissionDaemonInstaller.ServiceName = new SubmissionDaemon().ServiceName;
             this.Installers.AddRange(new Installer[] {
