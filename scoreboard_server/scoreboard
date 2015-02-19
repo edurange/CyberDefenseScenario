@@ -24,8 +24,6 @@ serverSocket.bind(('', serverPort))
 
 serverSocket.listen(1)
 
-print('listening on %d' % serverPort)
-
 while 1:
 	connectionSocket, addr = serverSocket.accept()
 	fh = open(filename, "r")
