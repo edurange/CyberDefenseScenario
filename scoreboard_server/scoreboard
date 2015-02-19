@@ -16,7 +16,7 @@ from socket import *
 
 filename = "/tmp/scoring/scoreboard_file.txt"
 
-serverPort = 1234
+serverPort = 80
 
 serverSocket = socket(AF_INET, SOCK_STREAM)
 
