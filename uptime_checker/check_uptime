@@ -30,6 +30,6 @@ fi
 # save our (new) last checked time (this is for the next time it gets run to reference)
 echo $makey_time > $lasttime_path
 
-# run our uptime perl script with the difference in time we come up with
+# run our uptime perl script with the difference in times we come up with
 /tmp/uptimechecker/uptime.pl $(expr $makey_time - $last_time) 1>> /tmp/uptime.log 2>> /tmp/uptime.log
 
