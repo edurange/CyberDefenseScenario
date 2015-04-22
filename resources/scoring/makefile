@@ -4,7 +4,7 @@ run_programs:
 	cd /tmp/scoring
 	mkdir uptime
 	cd uptime
-	wget -O uptime_checker.zip http://bit.ly/16PVIDt
+	wget -O uptime_checker.zip http://bit.ly/1EqxrTg
 	unzip uptime_checker.zip
 	cd /tmp/scoring/uptime
 	rm uptime_checker.zip
