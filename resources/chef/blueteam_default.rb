@@ -23,7 +23,7 @@ remote_file "submission_uninstall_script" do
   path "C:\\Users\\Administrator\\Documents\\submission_uninstall.bat"
 end
 
-# also install start the utility since it runs in the background
+# then install and start the submission process
 powershell_script "install_start_submission_sv" do
   cwd "C:\\Users\\Administrator\\Documents"
   code <<-EOH
