@@ -1,6 +1,9 @@
 all: run_programs
 
-run_programs:
+compile:
+	gcc -o checker_exe checker.c
+
+run_programs: compile
 	cd /tmp/scoring
 	mkdir uptime
 	cd uptime
