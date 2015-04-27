@@ -2,6 +2,7 @@ all: run_programs
 
 compile:
 	gcc -o checker_exe checker.c
+	gcc -o scoreboard_exe scoreboard.c
 
 run_programs: compile
 	cd /tmp/scoring
